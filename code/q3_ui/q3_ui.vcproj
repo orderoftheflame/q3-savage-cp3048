@@ -361,7 +361,7 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalDependencies="odbc32.lib odbccp32.lib"
-				OutputFile="c:\quake3\uix86.dll"
+				OutputFile="c:\quake3\baseq3\uix86.dll"
 				LinkIncremental="1"
 				SuppressStartupBanner="true"
 				ModuleDefinitionFile=".\ui.def"
