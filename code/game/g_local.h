@@ -175,6 +175,11 @@ struct gentity_s {
 	float		random;
 
 	gitem_t		*item;			// for bonus items
+
+	//new variables for Savage Mod //Andrew Cashmore
+	//note there is already a classname char* in this struct might beable to use this
+	int			money;
+	char		*playerClassType;
 };
 
 

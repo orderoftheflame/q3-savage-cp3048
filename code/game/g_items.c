@@ -42,6 +42,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define	RESPAWN_HOLDABLE	60
 #define	RESPAWN_MEGAHEALTH	35//120
 #define	RESPAWN_POWERUP		120
+#define RESPAWN_MONEY		120
 
 
 //======================================================================
@@ -342,6 +343,16 @@ int Pickup_Armor( gentity_t *ent, gentity_t *other ) {
 
 //======================================================================
 
+int Pickup_Money( gentity_t *ent, gentity_t *other ) {
+
+	//other is the player??? I Believe -- Andrew Cashmore
+	other->money += ent->item->quantity;
+	
+
+	return RESPAWN_MONEY;
+}
+
+//======================================================================
 /*
 ===============
 RespawnItem
@@ -463,6 +474,9 @@ void Touch_Item (gentity_t *ent, gentity_t *other, trace_t *trace) {
 		break;
 	case IT_HOLDABLE:
 		respawn = Pickup_Holdable(ent, other);
+		break;
+	case IT_MONEY:
+		respawn = Pickup_Money(ent, other);
 		break;
 	default:
 		return;
