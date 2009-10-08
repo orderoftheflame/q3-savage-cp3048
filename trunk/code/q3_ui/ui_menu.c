@@ -46,12 +46,13 @@ MAIN MENU
 
 #define ID_SINGLEPLAYER			10
 #define ID_MULTIPLAYER			11
-#define ID_SETUP				12
-#define ID_DEMOS				13
-#define ID_CINEMATICS			14
-#define ID_TEAMARENA		15
-#define ID_MODS					16
-#define ID_EXIT					17
+#define ID_UNIMOD				12	//TEST MENU FOR OUR MOD
+#define ID_SETUP				13
+#define ID_DEMOS				14
+#define ID_CINEMATICS			15
+#define ID_TEAMARENA			16
+#define ID_MODS					17
+#define ID_EXIT					18
 
 #define MAIN_BANNER_MODEL				"models/mapobjects/banner/banner5.md3"
 #define MAIN_MENU_VERTICAL_SPACING		34
@@ -62,6 +63,7 @@ typedef struct {
 
 	menutext_s		singleplayer;
 	menutext_s		multiplayer;
+	menutext_s		uniMod;
 	menutext_s		setup;
 	menutext_s		demos;
 	menutext_s		cinematics;
@@ -114,6 +116,10 @@ void Main_MenuEvent (void* ptr, int event) {
 
 	case ID_MULTIPLAYER:
 		UI_ArenaServersMenu();
+		break;
+
+	case ID_UNIMOD:
+	//	UI_UniModMenu(); //ui_unimod.c
 		break;
 
 	case ID_SETUP:
@@ -344,6 +350,18 @@ void UI_MainMenu( void ) {
 	s_main.multiplayer.color				= color_red;
 	s_main.multiplayer.style				= style;
 
+	// setup the new menu
+	y += MAIN_MENU_VERTICAL_SPACING;
+	s_main.uniMod.generic_mc.type			= MTYPE_PTEXT;
+	s_main.uniMod.generic_mc.flags			= QMF_CENTER_JUSTIFY|QMF_PULSEIFFOCUS;
+	s_main.uniMod.generic_mc.x				= 320;
+	s_main.uniMod.generic_mc.y				= y;
+	s_main.uniMod.generic_mc.id				= ID_UNIMOD;
+	s_main.uniMod.generic_mc.callback		= Main_MenuEvent; 
+	s_main.uniMod.string					= "UNI MOD";
+	s_main.uniMod.color						= color_red;
+	s_main.uniMod.style						= style;
+
 	y += MAIN_MENU_VERTICAL_SPACING;
 	s_main.setup.generic_mc.type				= MTYPE_PTEXT;
 	s_main.setup.generic_mc.flags				= QMF_CENTER_JUSTIFY|QMF_PULSEIFFOCUS;
@@ -415,6 +433,7 @@ void UI_MainMenu( void ) {
 
 	Menu_AddItem( &s_main.menu,	&s_main.singleplayer );
 	Menu_AddItem( &s_main.menu,	&s_main.multiplayer );
+	Menu_AddItem( &s_main.menu, &s_main.uniMod );
 	Menu_AddItem( &s_main.menu,	&s_main.setup );
 	Menu_AddItem( &s_main.menu,	&s_main.demos );
 	Menu_AddItem( &s_main.menu,	&s_main.cinematics );
