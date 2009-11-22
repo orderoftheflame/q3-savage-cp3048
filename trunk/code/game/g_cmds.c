@@ -1591,7 +1591,36 @@ void Cmd_Stats_f( gentity_t *ent ) {
 	trap_SendServerCommand( ent-g_entities, va("print \"%d%% level coverage\n\"", n * 100 / max));
 */
 }
+void Cmd_SetHoming_f (gentity_t *ent)
+{
+	if (ent->client->pers.homing_status == 1)
+	{
+		trap_SendServerCommand( ent-g_entities, va("print \"Homing Missiles are off.\n\""));
+		ent->client->pers.homing_status = qfalse;
+	}
+	else
+	{
+		trap_SendServerCommand( ent-g_entities, va("print \"Homing Missiles are on.\n\""));
+		ent->client->pers.homing_status = qtrue;
+	}
+}
 
+void Cmd_BuildItem_f (gentity_t *ent , int weapon, int cost)
+{
+	if ( ent->money >= cost )
+	{
+		gitem_t *item;
+
+		item = BG_FindItemForWeapon( (weapon_t)weapon );
+		ent->money -= cost;
+		Drop_Item( ent, item , 180 );
+		G_Printf( "Success you have built %s\n", item->pickup_name);
+	}
+	else
+	{
+		G_Printf( "Sorry you are low on funds :P\n");
+	}
+}
 /*
 =================
 ClientCommand
@@ -1698,6 +1727,16 @@ void ClientCommand( int clientNum ) {
 		Cmd_SetViewpos_f( ent );
 	else if (Q_stricmp (cmd, "stats") == 0)
 		Cmd_Stats_f( ent );
+	else if (Q_stricmp (cmd, "homing") == 0)
+		Cmd_SetHoming_f (ent);
+	else if (Q_stricmp (cmd, "build") == 0)
+		Cmd_BuildItem_f ( ent , 5 , 50 );
+	else if (Q_stricmp (cmd, "buildShotgun") == 0)
+		Cmd_BuildItem_f ( ent , 3 , 20 );
+	else if (Q_stricmp (cmd, "buildLightning") == 0)
+		Cmd_BuildItem_f ( ent , 6 , 75);
+	else if (Q_stricmp (cmd, "buildRailGun") == 0)
+		Cmd_BuildItem_f ( ent , 7 , 150 );
 	else
 		trap_SendServerCommand( clientNum, va("print \"unknown cmd %s\n\"", cmd ) );
 }
