@@ -134,6 +134,7 @@ typedef struct
 #define ID_JOYENABLE	39
 #define ID_JOYTHRESHOLD	40
 #define ID_SMOOTHMOUSE	41
+#define ID_BUILD		42
 
 #define ANIM_IDLE		0
 #define ANIM_RUN		1

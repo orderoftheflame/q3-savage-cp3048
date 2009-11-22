@@ -257,6 +257,7 @@ typedef struct {
 	int			voteCount;			// to prevent people from constantly calling votes
 	int			teamVoteCount;		// to prevent people from constantly calling votes
 	qboolean	teamInfo;			// send team overlay updates?
+	qboolean	homing_status;		// homing status player input mod could use this to active build menu??
 } clientPersistant_t;
 
 
