@@ -1737,6 +1737,8 @@ void ClientCommand( int clientNum ) {
 		Cmd_BuildItem_f ( ent , 6 , 75);
 	else if (Q_stricmp (cmd, "buildRailGun") == 0)
 		Cmd_BuildItem_f ( ent , 7 , 150 );
+	else if (Q_stricmp (cmd, "money") == 0)
+		ent->money += 100;
 	else
 		trap_SendServerCommand( clientNum, va("print \"unknown cmd %s\n\"", cmd ) );
 }
