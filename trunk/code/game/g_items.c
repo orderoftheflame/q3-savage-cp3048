@@ -346,7 +346,19 @@ int Pickup_Armor( gentity_t *ent, gentity_t *other ) {
 int Pickup_Money( gentity_t *ent, gentity_t *other ) {
 
 	//other is the player??? I Believe -- Andrew Cashmore
-	other->money += ent->item->quantity;
+	if (other->money >= 32767)
+	{
+		other->money = 32767;
+		other->client->ps.persistant[PERS_MONEY] = 32767;
+	}
+	else
+	{
+		other->money += ent->item->quantity;
+
+		//for the HUD I have no idea why they dont pass a pointer to the entity to the HUD but whatever
+		other->client->ps.persistant[PERS_MONEY] += ent->item->quantity;
+	}
+
 	G_Printf( "Current monies%d\n",other->money);
 	
 	return RESPAWN_MONEY;

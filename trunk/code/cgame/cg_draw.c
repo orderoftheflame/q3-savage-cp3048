@@ -574,7 +574,7 @@ static void CG_DrawStatusBar( void ) {
 		CG_DrawStatusBarFlag( 185 + CHAR_WIDTH*3 + TEXT_ICON_SPACE + ICON_SIZE, TEAM_FREE );
 	}
 
-	if ( ps->stats[ STAT_ARMOR ] ) {
+	if ( ps->persistant[PERS_MONEY] ) {
 		origin[0] = 90;
 		origin[1] = 0;
 		origin[2] = -10;
@@ -654,10 +654,11 @@ static void CG_DrawStatusBar( void ) {
 	//
 	// armor
 	//
-	value = ps->stats[STAT_ARMOR];
+	//value = ps->stats[STAT_ARMOR];
+	value = ps->persistant[PERS_MONEY];
 	if (value > 0 ) {
 		trap_R_SetColor( colors[0] );
-		CG_DrawField (370, 432, 3, value);
+		CG_DrawField (370, 432, 5, value);
 		trap_R_SetColor( NULL );
 		// if we didn't draw a 3D icon, draw a 2D icon for armor
 		if ( !cg_draw3dIcons.integer && cg_drawIcons.integer ) {
