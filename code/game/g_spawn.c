@@ -288,9 +288,22 @@ qboolean G_CallSpawn( gentity_t *ent ) {
 		return qfalse;
 	}
 
+	if ( g_gametype.integer == GT_DTF)
+	{
+		RegisterItem(BG_FindItemForPowerup(PW_SIGILWHITE));
+		RegisterItem(BG_FindItemForPowerup(PW_SIGILRED));
+		RegisterItem(BG_FindItemForPowerup(PW_SIGILBLUE));
+	}
+
 	// check item spawn functions
 	for ( item=bg_itemlist+1 ; item->classname ; item++ ) {
 		if ( !strcmp(item->classname, ent->classname) ) {
+			// if a CTF flag is found and the game type is DTF
+			// convert the flag to a sigil
+			if ( item->giType == IT_TEAM && g_gametype.integer == GT_DTF) {
+				item = BG_FindItemForPowerup(PW_SIGILWHITE);
+				ent->classname = item->classname;
+			}
 			G_SpawnItem( ent, item );
 			return qtrue;
 		}

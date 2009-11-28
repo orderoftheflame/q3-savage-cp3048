@@ -1418,7 +1418,13 @@ typedef enum _flag_status {
 	FLAG_DROPPED
 } flagStatus_t;
 
+typedef enum _sigil_status {
+	SIGIL_ISWHITE = 0,	// DTF
+	SIGIL_ISRED,		// DTF
+	SIGIL_ISBLUE		// DTF
+} sigilStatus_t;
 
+#define MAX_SIGILS	3
 
 #define	MAX_GLOBAL_SERVERS				4096
 #define	MAX_OTHER_SERVERS					128

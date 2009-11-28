@@ -655,6 +655,61 @@ Only in CTF games
 /* precache */ "",
 /* sounds */ ""
 	},
+	
+/* team_DTF_sigil_red
+Only in DTF games
+*/
+		{
+			"team_DTF_sigil_red",
+			NULL,
+			{
+			"models/sigils/r_flag.md3",
+			0, 0, 0 },
+/* icon */			"icons/iconf_red",
+/* pickup */		"Cart",
+			0,
+			IT_SIGIL,
+			PW_SIGILRED,
+/* precache */ "",
+/* sounds */ ""
+	},
+
+/* team_DTF_sigil_blue
+Only in DTF games
+*/
+		{
+			"team_DTF_sigil_blue",
+			NULL,
+			{
+			"models/sigils/b_flag.md3",
+			0, 0, 0 },
+/* icon */			"icons/iconf_blu",
+/* pickup */		"Cart",
+			0,
+			IT_SIGIL,
+			PW_SIGILBLUE,
+/* precache */ "",
+/* sounds */ ""
+	},
+
+/* team_DTF_sigil
+Only in DTF games
+*/
+		{
+			"team_DTF_sigil",
+			NULL,
+			{
+			"models/sigils/n_flag.md3",
+			0, 0, 0 },
+/* icon */			"icons/iconf_neutral",
+/* pickup */		"Cart",
+			0,
+			IT_SIGIL,
+			PW_SIGILWHITE,
+/* precache */ "",
+/* sounds */ ""
+	},
+
 
 #ifdef MISSIONPACK
 /*QUAKED holdable_kamikaze (.3 .3 1) (-16 -16 -16) (16 16 16) suspended
@@ -936,7 +991,8 @@ gitem_t	*BG_FindItemForPowerup( powerup_t pw ) {
 	for ( i = 0 ; i < bg_numItems ; i++ ) {
 		if ( (bg_itemlist[i].giType == IT_POWERUP || 
 					bg_itemlist[i].giType == IT_TEAM ||
-					bg_itemlist[i].giType == IT_PERSISTANT_POWERUP) && 
+					bg_itemlist[i].giType == IT_PERSISTANT_POWERUP ||
+					bg_itemlist[i].giType == IT_SIGIL) && 
 			bg_itemlist[i].giTag == pw ) {
 			return &bg_itemlist[i];
 		}
@@ -1167,6 +1223,16 @@ qboolean BG_CanItemBeGrabbed( int gametype, const entityState_t *ent, const play
 		}
 #endif
 		return qfalse;
+
+	case IT_SIGIL:
+		// red team cannot touch red sigil
+		if (ps->persistant[PERS_TEAM] == TEAM_RED && ent->powerups ==PW_SIGILRED)
+			return qfalse;
+		// blue team cannot touch blue sigil
+		if (ps->persistant[PERS_TEAM] == TEAM_BLUE && ent->powerups ==PW_SIGILBLUE)
+			return qfalse;
+		else
+			return qtrue;
 
 	case IT_HOLDABLE:
 		// can only hold one item at a time

@@ -25,6 +25,11 @@ Modified by Greg Dolley [1/1/2008]
 
 #include "g_local.h"
 
+typedef struct dtf_sigil_s
+{
+	gentity_t	*entity;
+	sigilStatus_t	status;
+} dtf_sigil_t;
 
 typedef struct teamgame_s {
 	float			last_flag_capture;
@@ -36,13 +41,18 @@ typedef struct teamgame_s {
 	int				blueTakenTime;
 	int				redObeliskAttackedTime;
 	int				blueObeliskAttackedTime;
+	dtf_sigil_t		sigil[MAX_SIGILS]; // DTF
 } teamgame_t;
+
+
 
 teamgame_t teamgame;
 
 gentity_t	*neutralObelisk;
 
 void Team_SetFlagStatus( int team, flagStatus_t status );
+void Init_Sigils( void );
+void Team_SetSigilStatus( int sigilNum, sigilStatus_t status );
 
 void Team_InitGame( void ) {
 	memset(&teamgame, 0, sizeof teamgame);
@@ -52,6 +62,14 @@ void Team_InitGame( void ) {
 		teamgame.redStatus = teamgame.blueStatus = (flagStatus_t)-1; // Invalid to force update // ***GREGS_VC9_PORT_MOD*** -- added typecast(s)
 		Team_SetFlagStatus( TEAM_RED, FLAG_ATBASE );
 		Team_SetFlagStatus( TEAM_BLUE, FLAG_ATBASE );
+		break;
+	case GT_DTF:
+		Init_Sigils();
+		teamgame.sigil[0].status = teamgame.sigil[1].status =
+		teamgame.sigil[2].status = (sigilStatus_t)-1; // Invalid to force update
+		Team_SetSigilStatus( 0, SIGIL_ISWHITE );
+		Team_SetSigilStatus( 1, SIGIL_ISWHITE );
+		Team_SetSigilStatus( 2, SIGIL_ISWHITE );
 		break;
 #ifdef MISSIONPACK
 	case GT_1FCTF:
@@ -193,6 +211,25 @@ qboolean OnSameTeam( gentity_t *ent1, gentity_t *ent2 ) {
 static char ctfFlagStatusRemap[] = { '0', '1', '*', '*', '2' };
 static char oneFlagStatusRemap[] = { '0', '1', '2', '3', '4' };
 
+void Init_Sigils( void ) {
+		gentity_t *point = NULL;
+		int sigilNum = 0;
+		for (point = g_entities; point < &g_entities[level.num_entities] ; point++ )
+		{
+			if (!point->inuse)
+				continue;
+
+			if (!strcmp(point->classname, "team_DTF_sigil")) {
+				teamgame.sigil[sigilNum].entity = point;
+				sigilNum++;
+			}
+
+			if ( sigilNum==2 )
+				return;
+		}
+}
+
+void Team_SetSigilStatus( int sigilNum, sigilStatus_t status ) {}
 void Team_SetFlagStatus( int team, flagStatus_t status ) {
 	qboolean modified = qfalse;
 
@@ -903,6 +940,58 @@ int Pickup_Team( gentity_t *ent, gentity_t *other ) {
 	}
 	return Team_TouchEnemyFlag( ent, other, team );
 }
+/*
+===========
+Sigil_Think
+
+===========
+*/
+void Sigil_Think( gentity_t *ent ) {
+	team_t team;
+
+	team = (ent->s.powerups == PW_SIGILRED) ? TEAM_RED : TEAM_BLUE;
+	ent->count = 0;
+	level.teamScores[team]++;
+	ent->nextthink = level.time + 4000;
+
+	//refresh scoreboard
+	CalculateRanks();
+}
+
+/*
+===========
+Sigil_Touch
+
+===========
+*/
+int Sigil_Touch( gentity_t *ent, gentity_t *other ) {
+	gclient_t *cl = other->client;
+
+	if (!cl)
+		return 0;
+
+	if (ent->count && ent->nextthink < level.time + 1500)
+		return 0;
+
+	if ( cl->sess.sessionTeam == TEAM_RED && ent->s.powerups != PW_SIGILRED )
+	{
+		ent->nextthink = level.time - (level.time % 4000) + 4000;
+		ent->think = Sigil_Think;
+		ent->s.powerups = PW_SIGILRED;
+		ent->s.modelindex = ITEM_INDEX( BG_FindItemForPowerup( PW_SIGILRED ) );
+		ent->count = 1;
+	}
+	else if ( cl->sess.sessionTeam == TEAM_BLUE && ent->s.powerups != PW_SIGILBLUE )
+	{
+		ent->nextthink = level.time - (level.time % 4000) + 4000;
+		ent->think = Sigil_Think;
+		ent->s.powerups = PW_SIGILBLUE;
+		ent->s.modelindex = ITEM_INDEX( BG_FindItemForPowerup( PW_SIGILBLUE ) );
+		ent->count = 1;
+	}
+	return 0;
+}
+
 
 /*
 ===========

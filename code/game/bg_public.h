@@ -103,6 +103,7 @@ typedef enum {
 
 	GT_TEAM,			// team deathmatch
 	GT_CTF,				// capture the flag
+	GT_DTF,				// defend the flag
 	GT_1FCTF,
 	GT_OBELISK,
 	GT_HARVESTER,
@@ -283,6 +284,10 @@ typedef enum {
 	PW_DOUBLER,
 	PW_AMMOREGEN,
 	PW_INVULNERABILITY,
+
+	PW_SIGILWHITE,
+	PW_SIGILRED,
+	PW_SIGILBLUE,
 
 	PW_NUM_POWERUPS
 
@@ -619,6 +624,7 @@ typedef enum {
 							// EFX: rotate + bob
 	IT_PERSISTANT_POWERUP,
 	IT_TEAM,
+	IT_SIGIL,
 	IT_MONEY
 } itemType_t;
 
