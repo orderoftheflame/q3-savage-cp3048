@@ -86,3 +86,4 @@ void TeamplayInfoMessage( gentity_t *ent );
 void CheckTeamStatus(void);
 
 int Pickup_Team( gentity_t *ent, gentity_t *other );
+int Sigil_Touch( gentity_t *ent, gentity_t *other ); //dtf
