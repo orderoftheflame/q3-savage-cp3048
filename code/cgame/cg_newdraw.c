@@ -192,10 +192,12 @@ static void CG_DrawPlayerArmorValue(rectDef_t *rect, float scale, vec4_t color, 
 	centity_t	*cent;
 	playerState_t	*ps;
 
+	cg.clientNum;
+
   cent = &cg_entities[cg.snap->ps.clientNum];
 	ps = &cg.snap->ps;
 
-	value = ps->stats[STAT_ARMOR];
+	value = ps->persistant[PERS_MONEY];//->stats[STAT_ARMOR];
   
 
 	if (shader) {
@@ -927,7 +929,7 @@ float CG_GetValue(int ownerDraw) {
     return ci->health;
     break;
   case CG_PLAYER_ARMOR_VALUE:
-		return ps->stats[STAT_ARMOR];
+	  return ps->persistant[PERS_MONEY];//->stats[STAT_ARMOR];
     break;
   case CG_PLAYER_AMMO_VALUE:
 		if ( cent->currentState.weapon ) {

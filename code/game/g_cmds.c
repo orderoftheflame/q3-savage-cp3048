@@ -1613,6 +1613,7 @@ void Cmd_BuildItem_f (gentity_t *ent , int weapon, int cost)
 
 		item = BG_FindItemForWeapon( (weapon_t)weapon );
 		ent->money -= cost;
+		ent->client->ps.persistant[PERS_MONEY] -= cost;
 		Drop_Item( ent, item , 180 );
 		G_Printf( "Success you have built %s\n", item->pickup_name);
 	}
@@ -1738,7 +1739,18 @@ void ClientCommand( int clientNum ) {
 	else if (Q_stricmp (cmd, "buildRailGun") == 0)
 		Cmd_BuildItem_f ( ent , 7 , 150 );
 	else if (Q_stricmp (cmd, "money") == 0)
-		ent->money += 100;
+	{	
+		if (ent->money >= 32767)
+		{
+			ent->money = 32767;
+			ent->client->ps.persistant[PERS_MONEY] = 32767;	
+		}
+		else
+		{
+			ent->money += 100;
+			ent->client->ps.persistant[PERS_MONEY] += 100;
+		}
+	}
 	else
 		trap_SendServerCommand( clientNum, va("print \"unknown cmd %s\n\"", cmd ) );
 }
