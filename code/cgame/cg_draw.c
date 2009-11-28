@@ -1931,7 +1931,7 @@ static void CG_DrawCrosshair(void) {
 	}
 
 	if ( cg.renderingThirdPerson ) {
-		return;
+		//return;
 	}
 
 	// set color based on health
