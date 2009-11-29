@@ -153,7 +153,7 @@ struct gentity_s {
 	int			splashMethodOfDeath;
 
 	int			count;
-
+	int			lastTouchTime;	//level.time when the item was last touched - Andrew Cashmore Nov 2009
 	gentity_t	*chain;
 	gentity_t	*enemy;
 	gentity_t	*activator;

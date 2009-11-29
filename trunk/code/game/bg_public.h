@@ -329,6 +329,15 @@ typedef enum {
 	WP_NUM_WEAPONS
 } weapon_t;
 
+typedef enum {
+	ST_NONE,
+
+	ST_AMMO_DES,
+	ST_POWER_DES,
+
+	ST_NUM_STRUCTURES
+
+} structure_t;
 
 // reward sounds (stored in ps->persistant[PERS_PLAYEREVENTS])
 #define	PLAYEREVENT_DENIEDREWARD		0x0001
@@ -626,7 +635,8 @@ typedef enum {
 	IT_PERSISTANT_POWERUP,
 	IT_TEAM,
 	IT_SIGIL,
-	IT_MONEY
+	IT_MONEY,				//our make money - Andrew Cashmore
+	IT_STRUCTURE,			// buildables - Andrew Cashmore
 } itemType_t;
 
 #define MAX_ITEM_MODELS 4
@@ -646,6 +656,7 @@ typedef struct gitem_s {
 
 	char		*precaches;		// string of all models and images this item will use
 	char		*sounds;		// string of all sounds this item will use
+	int			last_touch_time;
 } gitem_t;
 
 // included in both the game dll and the client
@@ -654,11 +665,12 @@ extern	int		bg_numItems;
 
 gitem_t	*BG_FindItem( const char *pickupName );
 gitem_t	*BG_FindItemForWeapon( weapon_t weapon );
+gitem_t *BG_FindItemForStructure( structure_t structure );
 gitem_t	*BG_FindItemForPowerup( powerup_t pw );
 gitem_t	*BG_FindItemForHoldable( holdable_t pw );
 #define	ITEM_INDEX(x) ((x)-bg_itemlist)
 
-qboolean	BG_CanItemBeGrabbed( int gametype, const entityState_t *ent, const playerState_t *ps );
+qboolean	BG_CanItemBeGrabbed( int gametype, const entityState_t *ent, const playerState_t *ps, int levelTime );
 
 
 // g_dmflags->integer flags

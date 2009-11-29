@@ -250,6 +250,7 @@ void	G_TouchTriggers( gentity_t *ent ) {
 	gentity_t	*hit;
 	trace_t		trace;
 	vec3_t		mins, maxs;
+	gitem_t	*tempitem;
 	static vec3_t	range = { 40, 40, 52 };
 
 	if ( !ent->client ) {
@@ -293,9 +294,20 @@ void	G_TouchTriggers( gentity_t *ent ) {
 		// use seperate code for determining if an item is picked up
 		// so you don't have to actually contact its bounding box
 		if ( hit->s.eType == ET_ITEM ) {
-			if ( !BG_PlayerTouchesItem( &ent->client->ps, &hit->s, level.time ) ) {
+			if ( (hit->lastTouchTime + 250 < level.time ) )
+			{
+				if ( !BG_PlayerTouchesItem( &ent->client->ps, &hit->s, level.time ) ) {
+					continue;
+				}
+				hit->lastTouchTime = level.time;
+				tempitem = &bg_itemlist[hit->s.modelindex];
+				tempitem->last_touch_time = level.time;
+			}
+			else
+			{
 				continue;
 			}
+			
 		} else {
 			if ( !trap_EntityContact( mins, maxs, hit ) ) {
 				continue;
@@ -305,7 +317,11 @@ void	G_TouchTriggers( gentity_t *ent ) {
 		memset( &trace, 0, sizeof(trace) );
 
 		if ( hit->touch ) {
-			hit->touch (hit, ent, &trace);
+			//if ( (hit->lastTouchTime + 5000 < level.time ) )
+			//{
+			//	hit->lastTouchTime = level.time;
+				hit->touch (hit, ent, &trace);
+			//}
 		}
 
 		if ( ( ent->r.svFlags & SVF_BOT ) && ( ent->touch ) ) {
