@@ -1622,6 +1622,27 @@ void Cmd_BuildItem_f (gentity_t *ent , int weapon, int cost)
 		G_Printf( "Sorry you are low on funds :P\n");
 	}
 }
+
+void Cmd_BuildStructure_f (gentity_t *ent , int structure, int cost)
+{
+	if ( ent->money >= cost )
+	{
+		gitem_t *item;
+
+		//item = BG_FindItemForWeapon( (weapon_t)weapon );
+		item = BG_FindItemForStructure( (structure_t)structure );
+
+		ent->money -= cost;
+		ent->client->ps.persistant[PERS_MONEY] -= cost;
+		Drop_Item( ent, item , 0 );
+		G_Printf( "Success you have built %s\n", item->pickup_name);
+	}
+	else
+	{
+		G_Printf( "Sorry you are low on funds :P\n");
+	}
+}
+
 /*
 =================
 ClientCommand
@@ -1751,6 +1772,10 @@ void ClientCommand( int clientNum ) {
 			ent->client->ps.persistant[PERS_MONEY] += 100;
 		}
 	}
+	else if (Q_stricmp (cmd, "buildAmmoDespenser") == 0)
+		Cmd_BuildStructure_f ( ent , 1 , 150 );
+	else if (Q_stricmp (cmd, "buildPowerDespenser") == 0)
+		Cmd_BuildStructure_f ( ent , 2 , 150 );
 	else
 		trap_SendServerCommand( clientNum, va("print \"unknown cmd %s\n\"", cmd ) );
 }

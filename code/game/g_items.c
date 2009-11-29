@@ -43,6 +43,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define	RESPAWN_MEGAHEALTH	35//120
 #define	RESPAWN_POWERUP		120
 #define RESPAWN_MONEY		15
+#define RESPAWN_STRUCTURE	0
 
 
 //======================================================================
@@ -364,6 +365,25 @@ int Pickup_Money( gentity_t *ent, gentity_t *other ) {
 	return RESPAWN_MONEY;
 }
 
+int Pickup_Structure( gentity_t *ent, gentity_t *other ) {
+	int max;
+	G_Printf( "You're Touching a %s\n",ent->item->classname);
+
+	if ( ent->item->giTag == ST_POWER_DES ) {
+		max = other->client->ps.stats[STAT_MAX_HEALTH]+25;
+		
+		other->health += ent->item->quantity;
+
+		if (other->health > max ) 
+		{
+			other->health = max;
+		}
+		other->client->ps.stats[STAT_HEALTH] = other->health;
+
+	} 
+
+	return RESPAWN_STRUCTURE;
+}
 //======================================================================
 /*
 ===============
@@ -448,12 +468,12 @@ void Touch_Item (gentity_t *ent, gentity_t *other, trace_t *trace) {
 		return;		// dead people can't pickup
 
 	// the same pickup rules are used for client side and server side
-	if ( !BG_CanItemBeGrabbed( g_gametype.integer, &ent->s, &other->client->ps ) ) {
+	if ( !BG_CanItemBeGrabbed( g_gametype.integer, &ent->s, &other->client->ps, level.time ) ) {
 		return;
 	}
-
+	
 	G_LogPrintf( "Item: %i %s\n", other->s.number, ent->item->classname );
-
+	G_Printf( "Item: %i %s\n", other->s.number, ent->item->classname);
 	predict = other->client->pers.predictItemPickup;
 
 	// call the item-specific pickup function
@@ -494,6 +514,11 @@ void Touch_Item (gentity_t *ent, gentity_t *other, trace_t *trace) {
 	case IT_MONEY:
 		respawn = Pickup_Money(ent, other);
 		break;
+	case IT_STRUCTURE:
+	{
+		respawn = Pickup_Structure(ent, other);
+		return;
+	}
 	default:
 		return;
 	}

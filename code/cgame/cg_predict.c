@@ -274,13 +274,15 @@ static void CG_TouchItem( centity_t *cent ) {
 	if ( cent->miscTime == cg.time ) {
 		return;
 	}
-
-	if ( !BG_CanItemBeGrabbed( cgs.gametype, &cent->currentState, &cg.predictedPlayerState ) ) {
+	
+	if ( !BG_CanItemBeGrabbed( cgs.gametype, &cent->currentState, &cg.predictedPlayerState , cg.time ) ) {
 		return;		// can't hold it
 	}
 
 	item = &bg_itemlist[ cent->currentState.modelindex ];
-
+//	if( item->giType == IT_STRUCTURE ) {
+//		return;		
+//	}
 	// Special case for flags.  
 	// We don't predict touching our own flag
 #ifdef MISSIONPACK
@@ -302,10 +304,15 @@ static void CG_TouchItem( centity_t *cent ) {
 	}
 
 	// grab it
+	
 	BG_AddPredictableEventToPlayerstate( EV_ITEM_PICKUP, cent->currentState.modelindex , &cg.predictedPlayerState);
-
-	// remove it from the frame so it won't be drawn
-	cent->currentState.eFlags |= EF_NODRAW;
+	
+	if ( item->giType != IT_STRUCTURE)
+	{	
+		cent->currentState.eFlags |= EF_NODRAW;
+		// remove it from the frame so it won't be drawn
+		
+	}
 
 	// don't touch it again this prediction
 	cent->miscTime = cg.time;

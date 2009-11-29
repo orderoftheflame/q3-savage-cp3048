@@ -709,6 +709,32 @@ Only in DTF games
 /* precache */ "",
 /* sounds */ ""
 	},
+		{
+			"ammo_despenser",
+			"sound/builds/ammo_despenser.wav",
+			{ "models/builds/dispencer.md3", 
+			0, 0, 0 },
+/* icon */		"icons/iconh_ammoDespenser",
+/* pickup */	"Ammo Despenser",
+			10,
+			IT_STRUCTURE,
+			ST_AMMO_DES,
+/* precache */ "",
+/* sounds */ ""
+	},
+	{
+			"power_despenser",
+			"sound/builds/power_despenser.wav",
+			{ "models/builds/powerup.md3", 
+			0, 0, 0 },
+/* icon */		"icons/iconh_powerDespenser",
+/* pickup */	"Power Despenser",
+			1,
+			IT_STRUCTURE,
+			ST_POWER_DES,
+/* precache */ "",
+/* sounds */ ""
+	},
 
 
 #ifdef MISSIONPACK
@@ -1041,6 +1067,26 @@ gitem_t	*BG_FindItemForWeapon( weapon_t weapon ) {
 	return NULL;
 }
 
+
+/*
+===============
+BG_FindItemForStructure
+
+===============
+*/
+gitem_t	*BG_FindItemForStructure( structure_t structure ) {
+	gitem_t	*it;
+	
+	for ( it = bg_itemlist + 1 ; it->classname ; it++) {
+		if ( it->giType == IT_STRUCTURE && it->giTag == structure ) {
+			return it;
+		}
+	}
+
+	Com_Error( ERR_DROP, "Couldn't find item for structure %i", structure);
+	return NULL;
+}
+
 /*
 ===============
 BG_FindItem
@@ -1094,12 +1140,11 @@ Returns false if the item should not be picked up.
 This needs to be the same for client side prediction and server use.
 ================
 */
-qboolean BG_CanItemBeGrabbed( int gametype, const entityState_t *ent, const playerState_t *ps ) {
+qboolean BG_CanItemBeGrabbed( int gametype, const entityState_t *ent, const playerState_t *ps, int levelTime ) {
 	gitem_t	*item;
 #ifdef MISSIONPACK
 	int		upperBound;
 #endif
-
 	if ( ent->modelindex < 1 || ent->modelindex >= bg_numItems ) {
 		Com_Error( ERR_DROP, "BG_CanItemBeGrabbed: index out of range" );
 	}
@@ -1240,17 +1285,49 @@ qboolean BG_CanItemBeGrabbed( int gametype, const entityState_t *ent, const play
 			return qfalse;
 		}
 		return qtrue;
-
-        case IT_BAD:
-            Com_Error( ERR_DROP, "BG_CanItemBeGrabbed: IT_BAD" );
-        default:
+	case IT_MONEY:
+	{
+		return qtrue;
+	}
+	case IT_STRUCTURE:
+	{
+		//need to add timer
+		//if ( ps->pm_time > ps->last_Structure_Touch_time)
+		//{
+		//	ps->last_Structure_Touch_time = ps->pm_time;
+			//return qtrue;
+		//}
+		//touched in same frame
+	/*	if ( levelTime == 0 )
+		{
+			return qfalse;
+		}
+		if ( item->last_touch_time == levelTime )
+		{
+			return qtrue;
+		}
+		if ( item->last_touch_time + 5000 < levelTime )
+		{
+			return qtrue;
+		}
+		else if ( item->last_touch_time + 5000 >= levelTime )
+		{
+			return qfalse;
+		}*/
+		//always touch first time
+		return qtrue;
+	}
+	case IT_BAD:
+        Com_Error( ERR_DROP, "BG_CanItemBeGrabbed: IT_BAD" );
+    default:
 #ifndef Q3_VM
 #ifndef NDEBUG // bk0001204
           Com_Printf("BG_CanItemBeGrabbed: unknown enum %d\n", item->giType );
 #endif
 #endif
-         break;
+    break;
 	}
+	
 
 	return qfalse;
 }
