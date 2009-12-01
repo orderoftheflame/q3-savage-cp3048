@@ -1742,10 +1742,10 @@ void Menu_Cache( void )
 		uis.menuBackShader	= trap_R_RegisterShaderNoMip( "menubackRagePro" );
 	} else {
 		//uis.menuBackShader	= trap_R_RegisterShaderNoMip( "menuback" );
-		uis.menuBackShader	= trap_R_RegisterShaderNoMip( "textures/Menu/menu.tga" );
+		uis.menuBackShader	= trap_R_RegisterShaderNoMip( "ui/Menu/menu.tga" );
 	}
 	//uis.menuBackNoLogoShader = trap_R_RegisterShaderNoMip( "menubacknologo" );
-	uis.menuBackNoLogoShader	= trap_R_RegisterShaderNoMip( "textures/Menu/menu.tga" );
+	uis.menuBackNoLogoShader	= trap_R_RegisterShaderNoMip( "ui/Menu/menu.tga" );
 	menu_in_sound	= trap_S_RegisterSound( "sound/misc/menu1.wav", qfalse );
 	menu_move_sound	= trap_S_RegisterSound( "sound/misc/menu2.wav", qfalse );
 	menu_out_sound	= trap_S_RegisterSound( "sound/misc/menu3.wav", qfalse );

@@ -3184,7 +3184,7 @@ static bind_t g_bindings[] =
 	{"taskEscort", 'e',					-1,		-1, -1},
 	{"taskOwnFlag", 'i',					-1,		-1, -1},
 	{"taskSuicide", 'k',					-1,		-1, -1},
-	{"tauntKillInsult", K_F1,			-1,		-1, -1},
+	{"tauntKillInsult", -1,			-1,		-1, -1},
 	{"tauntPraise", K_F2,			-1,		-1, -1},
 	{"tauntTaunt", K_F3,			-1,		-1, -1},
 	{"tauntDeathInsult", K_F4,			-1,		-1, -1},
@@ -3195,7 +3195,8 @@ static bind_t g_bindings[] =
 	{"messagemode",  -1,					-1,		-1, -1},
 	{"messagemode2", -1,						-1,		-1, -1},
 	{"messagemode3", -1,						-1,		-1, -1},
-	{"messagemode4", -1,						-1,		-1, -1}
+	{"messagemode4", -1,						-1,		-1, -1},
+	{"+buildmenu", 		 K_F1,			-1,		-1, -1}
 };
 
 

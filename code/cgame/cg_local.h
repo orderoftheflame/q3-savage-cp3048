@@ -539,6 +539,8 @@ typedef struct {
 	score_t		scores[MAX_CLIENTS];
 	qboolean	showScores;
 	qboolean	scoreBoardShowing;
+	qboolean	buildMenuShowing;
+	qboolean	showBuildMenu;
 	int			scoreFadeTime;
 	char		killerName[MAX_NAME_LENGTH];
 	char			spectatorList[MAX_STRING_CHARS];		// list of names
@@ -697,7 +699,7 @@ typedef struct {
 	qhandle_t	armorIcon;
 
 	qhandle_t	teamStatusBar;
-
+	qhandle_t	buildMenuOverlay;
 	qhandle_t	deferShader;
 
 	// gib explosions
@@ -790,6 +792,8 @@ typedef struct {
 	// special effects models
 	qhandle_t	teleportEffectModel;
 	qhandle_t	teleportEffectShader;
+	
+
 #ifdef MISSIONPACK
 	qhandle_t	kamikazeEffectModel;
 	qhandle_t	kamikazeShockWave;

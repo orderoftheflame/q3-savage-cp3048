@@ -360,14 +360,14 @@ int Pickup_Money( gentity_t *ent, gentity_t *other ) {
 		other->client->ps.persistant[PERS_MONEY] += ent->item->quantity;
 	}
 
-	G_Printf( "Current monies%d\n",other->money);
+//	G_Printf( "Current monies%d\n",other->money);
 	
 	return RESPAWN_MONEY;
 }
 
 int Pickup_Structure( gentity_t *ent, gentity_t *other ) {
 	int max;
-	G_Printf( "You're Touching a %s\n",ent->item->classname);
+//	G_Printf( "You're Touching a %s\n",ent->item->classname);
 
 	if ( ent->item->giTag == ST_POWER_DES ) {
 		max = other->client->ps.stats[STAT_MAX_HEALTH]+25;
@@ -473,7 +473,7 @@ void Touch_Item (gentity_t *ent, gentity_t *other, trace_t *trace) {
 	}
 	
 	G_LogPrintf( "Item: %i %s\n", other->s.number, ent->item->classname );
-	G_Printf( "Item: %i %s\n", other->s.number, ent->item->classname);
+//	G_Printf( "Item: %i %s\n", other->s.number, ent->item->classname);
 	predict = other->client->pers.predictItemPickup;
 
 	// call the item-specific pickup function

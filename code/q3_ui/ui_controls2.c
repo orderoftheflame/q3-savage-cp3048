@@ -134,7 +134,7 @@ typedef struct
 #define ID_JOYENABLE	39
 #define ID_JOYTHRESHOLD	40
 #define ID_SMOOTHMOUSE	41
-#define ID_BUILD		42
+#define ID_SHOWBUILD	42
 
 #define ANIM_IDLE		0
 #define ANIM_RUN		1
@@ -275,6 +275,7 @@ static bind_t g_bindings[] =
 	{"messagemode2", 	"chat - team",		ID_CHAT2,		ANIM_CHAT,		-1,				-1,		-1, -1},
 	{"messagemode3", 	"chat - target",	ID_CHAT3,		ANIM_CHAT,		-1,				-1,		-1, -1},
 	{"messagemode4", 	"chat - attacker",	ID_CHAT4,		ANIM_CHAT,		-1,				-1,		-1, -1},
+	{"+buildmenu",		"show build menu",	ID_SHOWBUILD,	ANIM_IDLE,		K_F1,			-1,		-1, -1},
 	{(char*)NULL,		(char*)NULL,		0,				0,				-1,				-1,		-1,	-1},
 };
 
