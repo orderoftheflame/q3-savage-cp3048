@@ -512,7 +512,7 @@ void CG_DrawTeamBackground( int x, int y, int w, int h, float alpha, int team )
 	} else {
 		return;
 	}
-	trap_R_SetColor( hcolor );
+	//trap_R_SetColor( hcolor );
 	CG_DrawPic( x, y, w, h, cgs.media.teamStatusBar );
 	trap_R_SetColor( NULL );
 }
@@ -2136,6 +2136,28 @@ static void CG_DrawTeamVote(void) {
 							cgs.teamVoteYes[cs_offset], cgs.teamVoteNo[cs_offset] );
 	CG_DrawSmallString( 0, 90, s, 1.0F );
 }
+static qboolean CG_DrawWeaponMenu(){
+	
+	//am I REALLY going to need a new .c file for these dammit to hell
+
+	if ( cg_paused.integer ) {
+		cg.deferredPlayerLoading = 0;
+		return qfalse;
+	}
+
+	if ( cgs.gametype == GT_SINGLE_PLAYER && cg.predictedPlayerState.pm_type == PM_INTERMISSION ) {
+		cg.deferredPlayerLoading = 0;
+		return qfalse;
+	}
+
+	// don't draw build menu during death while warmup up
+	if ( cg.warmup && !cg.showWeaponMenu ) {
+		return qfalse;
+	}
+
+	CG_DrawPic( 0, 0, 640, 480, cgs.media.weaponMenuOverlay );
+	return qtrue;
+}
 
 static qboolean CG_DrawBuildMenu(){
 	
@@ -2606,6 +2628,10 @@ static void CG_Draw2D( void ) {
 	// don't draw center string if scoreboard is up
 	cg.scoreBoardShowing = CG_DrawScoreboard();
 	// don't call the draw unless needed??? above call seems like wasted call?
+	if ( cg.showWeaponMenu )
+	{
+		cg.weaponMenuShowing = CG_DrawWeaponMenu();
+	}
 	if ( cg.showBuildMenu )
 	{
 		cg.buildMenuShowing = CG_DrawBuildMenu();

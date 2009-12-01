@@ -714,7 +714,7 @@ Only in DTF games
 			"sound/builds/ammo_despenser.wav",
 			{ "models/builds/dispencer.md3", 
 			0, 0, 0 },
-/* icon */		"icons/iconh_ammoDespenser",
+/* icon */		"icons/medkit",
 /* pickup */	"Ammo Despenser",
 			10,
 			IT_STRUCTURE,
@@ -727,11 +727,37 @@ Only in DTF games
 			"sound/builds/power_despenser.wav",
 			{ "models/builds/powerup.md3", 
 			0, 0, 0 },
-/* icon */		"icons/iconh_powerDespenser",
+/* icon */		"icons/medkit",
 /* pickup */	"Power Despenser",
 			1,
 			IT_STRUCTURE,
 			ST_POWER_DES,
+/* precache */ "",
+/* sounds */ ""
+	},
+	{
+			"health_despenser",
+			"sound/builds/health_despenser.wav",
+			{ "models/builds/health_blue.md3", 
+			0, 0, 0 },
+/* icon */		"icons/medkit",
+/* pickup */	"Health Despenser",
+			1,
+			IT_STRUCTURE,
+			ST_HEALTH_DES,
+/* precache */ "",
+/* sounds */ ""
+	},
+	{
+			"Money_despenser",
+			"sound/builds/Money_despenser.wav",
+			{ "models/builds/cp_blue.md3", 
+			0, 0, 0 },
+/* icon */		"icons/medkit",
+/* pickup */	"Money Despenser",
+			1,
+			IT_STRUCTURE,
+			ST_MONEY_DES,
 /* precache */ "",
 /* sounds */ ""
 	},
@@ -1676,6 +1702,7 @@ This is done after each set of usercmd_t on the server,
 and after local prediction on the client
 ========================
 */
+
 void BG_PlayerStateToEntityStateExtraPolate( playerState_t *ps, entityState_t *s, int time, qboolean snap ) {
 	int		i;
 

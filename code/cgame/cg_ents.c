@@ -223,6 +223,8 @@ static void CG_Speaker( centity_t *cent ) {
 CG_Item
 ==================
 */
+
+
 static void CG_Item( centity_t *cent ) {
 	refEntity_t		ent;
 	entityState_t	*es;
@@ -263,6 +265,14 @@ static void CG_Item( centity_t *cent ) {
 		cent->lerpOrigin[2] += 4 + cos( ( cg.time + 1000 ) *  scale ) * 4;
 
 	}
+
+	if (item->giType == IT_STRUCTURE)
+	{
+		//check what type 
+		//if item drop find what type of items and drop them.
+
+	}
+
 	memset (&ent, 0, sizeof(ent));
 	// autorotate at one of two speeds
 	if ( item->giType == IT_HEALTH ) {

@@ -334,7 +334,8 @@ typedef enum {
 
 	ST_AMMO_DES,
 	ST_POWER_DES,
-
+	ST_HEALTH_DES,
+	ST_MONEY_DES,
 	ST_NUM_STRUCTURES
 
 } structure_t;
@@ -724,7 +725,6 @@ void	BG_PlayerStateToEntityState( playerState_t *ps, entityState_t *s, qboolean 
 void	BG_PlayerStateToEntityStateExtraPolate( playerState_t *ps, entityState_t *s, int time, qboolean snap );
 
 qboolean	BG_PlayerTouchesItem( playerState_t *ps, entityState_t *item, int atTime );
-
 
 #define ARENAS_PER_TIER		4
 #define MAX_ARENAS			1024

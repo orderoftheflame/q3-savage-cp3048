@@ -541,6 +541,10 @@ typedef struct {
 	qboolean	scoreBoardShowing;
 	qboolean	buildMenuShowing;
 	qboolean	showBuildMenu;
+
+	qboolean	weaponMenuShowing;
+	qboolean	showWeaponMenu;
+
 	int			scoreFadeTime;
 	char		killerName[MAX_NAME_LENGTH];
 	char			spectatorList[MAX_STRING_CHARS];		// list of names
@@ -697,9 +701,10 @@ typedef struct {
 
 	qhandle_t	armorModel;
 	qhandle_t	armorIcon;
-
+	qhandle_t	baseUiOverlay;
 	qhandle_t	teamStatusBar;
 	qhandle_t	buildMenuOverlay;
+	qhandle_t	weaponMenuOverlay;
 	qhandle_t	deferShader;
 
 	// gib explosions

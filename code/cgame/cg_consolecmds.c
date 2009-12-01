@@ -83,6 +83,21 @@ static void CG_Viewpos_f (void) {
 		(int)cg.refdefViewAngles[YAW]);
 }
 
+static void CG_WeaponMenuDown_f ( void ) {
+	if ( !cg.showWeaponMenu ) 
+	{
+		cg.showWeaponMenu = qtrue;
+	}
+}
+
+static void CG_WeaponMenuUp_f ( void ) {
+	if ( cg.showWeaponMenu ) 
+	{
+		cg.showWeaponMenu = qfalse;
+		//cg.scoreFadeTime = cg.time;
+	}
+}
+
 static void CG_BuildMenuDown_f ( void ) {
 	if ( !cg.showBuildMenu ) 
 	{
@@ -488,6 +503,8 @@ static consoleCommand_t	commands[] = {
 	{ "tcmd", CG_TargetCommand_f },
 	{ "+buildmenu", CG_BuildMenuDown_f },
 	{ "-buildmenu", CG_BuildMenuUp_f },
+	{ "+weaponmenu", CG_WeaponMenuDown_f },
+	{ "-weaponmenu", CG_WeaponMenuUp_f },
 #ifdef MISSIONPACK
 	{ "loadhud", CG_LoadHud_f },
 	{ "nextTeamMember", CG_NextTeamMember_f },

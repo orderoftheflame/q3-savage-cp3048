@@ -1615,11 +1615,11 @@ void Cmd_BuildItem_f (gentity_t *ent , int weapon, int cost)
 		ent->money -= cost;
 		ent->client->ps.persistant[PERS_MONEY] -= cost;
 		Drop_Item( ent, item , 180 );
-		G_Printf( "Success you have built %s\n", item->pickup_name);
+		//G_Printf( "Success you have built %s\n", item->pickup_name);
 	}
 	else
 	{
-		G_Printf( "Sorry you are low on funds :P\n");
+		G_Printf( "Sorry you are low on Gold\n");
 	}
 }
 
@@ -1635,11 +1635,11 @@ void Cmd_BuildStructure_f (gentity_t *ent , int structure, int cost)
 		ent->money -= cost;
 		ent->client->ps.persistant[PERS_MONEY] -= cost;
 		Drop_Item( ent, item , 0 );
-		G_Printf( "Success you have built %s\n", item->pickup_name);
+		//G_Printf( "Success you have built %s\n", item->pickup_name);
 	}
 	else
 	{
-		G_Printf( "Sorry you are low on funds :P\n");
+		G_Printf( "Sorry you are low on Gold\n");
 	}
 }
 
@@ -1754,9 +1754,11 @@ void ClientCommand( int clientNum ) {
 	else if (Q_stricmp (cmd, "build") == 0)
 		Cmd_BuildItem_f ( ent , 5 , 50 );
 	else if (Q_stricmp (cmd, "buildShotgun") == 0)
-		Cmd_BuildItem_f ( ent , 3 , 20 );
+		Cmd_BuildItem_f ( ent , 3 , 25 );
 	else if (Q_stricmp (cmd, "buildLightning") == 0)
 		Cmd_BuildItem_f ( ent , 6 , 75);
+	else if (Q_stricmp (cmd, "buildMachineGun") == 0)
+		Cmd_BuildItem_f ( ent , 2 , 15);
 	else if (Q_stricmp (cmd, "buildRailGun") == 0)
 		Cmd_BuildItem_f ( ent , 7 , 150 );
 	else if (Q_stricmp (cmd, "money") == 0)
@@ -1769,13 +1771,17 @@ void ClientCommand( int clientNum ) {
 		else
 		{
 			ent->money += 100;
-			ent->client->ps.persistant[PERS_MONEY] += 100;
+			ent->client->ps.persistant[PERS_MONEY] += 1000;
 		}
 	}
 	else if (Q_stricmp (cmd, "buildAmmoDespenser") == 0)
-		Cmd_BuildStructure_f ( ent , 1 , 150 );
+		Cmd_BuildStructure_f ( ent , 1 , 200 );
 	else if (Q_stricmp (cmd, "buildPowerDespenser") == 0)
-		Cmd_BuildStructure_f ( ent , 2 , 150 );
+		Cmd_BuildStructure_f ( ent , 2 , 200 );
+	else if (Q_stricmp (cmd, "buildHealthDespenser") == 0)
+		Cmd_BuildStructure_f ( ent , 3 , 100 );
+	else if (Q_stricmp (cmd, "buildCashDespenser") == 0)
+		Cmd_BuildStructure_f ( ent , 4 , 500 );
 	else
 		trap_SendServerCommand( clientNum, va("print \"unknown cmd %s\n\"", cmd ) );
 }
