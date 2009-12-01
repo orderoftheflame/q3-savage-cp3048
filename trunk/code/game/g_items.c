@@ -369,7 +369,7 @@ int Pickup_Structure( gentity_t *ent, gentity_t *other ) {
 	int max;
 //	G_Printf( "You're Touching a %s\n",ent->item->classname);
 
-	if ( ent->item->giTag == ST_POWER_DES ) {
+	if ( ent->item->giTag == ST_HEALTH_DES ) {
 		max = other->client->ps.stats[STAT_MAX_HEALTH]+25;
 		
 		other->health += ent->item->quantity;
@@ -380,8 +380,37 @@ int Pickup_Structure( gentity_t *ent, gentity_t *other ) {
 		}
 		other->client->ps.stats[STAT_HEALTH] = other->health;
 
-	} 
+	}
 
+	if( ent->item->giTag == ST_MONEY_DES ) {
+		if (other->money >= 32767)
+		{
+			other->money = 32767;
+			other->client->ps.persistant[PERS_MONEY] = 32767;
+		}
+		else
+		{
+			other->money += ent->item->quantity;
+
+			//for the HUD I have no idea why they dont pass a pointer to the entity to the HUD but whatever
+			other->client->ps.persistant[PERS_MONEY] += ent->item->quantity;
+		}	
+		
+	}
+	if( ent->item->giTag == ST_AMMO_DES ) {
+		gitem_t *item;
+
+		item = BG_FindItemForWeapon( (weapon_t)7 );
+		Drop_Item( ent, item , 180 );
+	}
+
+	if( ent->item->giTag == ST_POWER_DES ) {
+		gitem_t *item;
+
+		item = BG_FindItemForWeapon( (weapon_t)7 );
+		Drop_Item( ent, item , 180 );
+	}
+	
 	return RESPAWN_STRUCTURE;
 }
 //======================================================================

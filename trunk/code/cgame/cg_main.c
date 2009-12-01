@@ -966,7 +966,11 @@ static void CG_RegisterGraphics( void ) {
 	cgs.media.armorIcon  = trap_R_RegisterShaderNoMip( "icons/iconr_yellow" );
 
 	
-	cgs.media.buildMenuOverlay  = trap_R_RegisterShaderNoMip( "ui/HUD/build_menu2.tga" );
+	cgs.media.buildMenuOverlay  = trap_R_RegisterShaderNoMip( "ui/HUD/Menu_Build.tga" );
+	cgs.media.weaponMenuOverlay  = trap_R_RegisterShaderNoMip( "ui/HUD/Menu_Weapons.tga" );
+
+	cgs.media.baseUiOverlay  = trap_R_RegisterShaderNoMip( "ui/HUD/HUD.tga" );
+
 	cgs.media.machinegunBrassModel = trap_R_RegisterModel( "models/weapons2/shells/m_shell.md3" );
 	cgs.media.shotgunBrassModel = trap_R_RegisterModel( "models/weapons2/shells/s_shell.md3" );
 
