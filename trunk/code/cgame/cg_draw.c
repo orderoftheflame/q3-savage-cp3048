@@ -523,7 +523,7 @@ CG_DrawStatusBar
 
 ================
 */
-#ifndef MISSIONPACK
+//#ifndef MISSIONPACK
 static void CG_DrawStatusBar( void ) {
 	int			color;
 	centity_t	*cent;
@@ -690,7 +690,7 @@ static void CG_DrawStatusBar( void ) {
 	}
 #endif
 }
-#endif
+//#endif
 
 /*
 ===========================================================================================
@@ -2137,7 +2137,28 @@ static void CG_DrawTeamVote(void) {
 	CG_DrawSmallString( 0, 90, s, 1.0F );
 }
 
+static qboolean CG_DrawBuildMenu(){
+	
+	//am I REALLY going to need a new .c file for these dammit to hell
 
+	if ( cg_paused.integer ) {
+		cg.deferredPlayerLoading = 0;
+		return qfalse;
+	}
+
+	if ( cgs.gametype == GT_SINGLE_PLAYER && cg.predictedPlayerState.pm_type == PM_INTERMISSION ) {
+		cg.deferredPlayerLoading = 0;
+		return qfalse;
+	}
+
+	// don't draw build menu during death while warmup up
+	if ( cg.warmup && !cg.showBuildMenu ) {
+		return qfalse;
+	}
+
+	CG_DrawPic( 0, 0, 640, 480, cgs.media.buildMenuOverlay );
+	return qtrue;
+}
 static qboolean CG_DrawScoreboard() {
 #ifdef MISSIONPACK
 	static qboolean firstTime = qtrue;
@@ -2584,6 +2605,11 @@ static void CG_Draw2D( void ) {
 
 	// don't draw center string if scoreboard is up
 	cg.scoreBoardShowing = CG_DrawScoreboard();
+	// don't call the draw unless needed??? above call seems like wasted call?
+	if ( cg.showBuildMenu )
+	{
+		cg.buildMenuShowing = CG_DrawBuildMenu();
+	}
 	if ( !cg.scoreBoardShowing) {
 		CG_DrawCenterString();
 	}

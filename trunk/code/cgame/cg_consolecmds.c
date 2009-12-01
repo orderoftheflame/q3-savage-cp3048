@@ -83,6 +83,20 @@ static void CG_Viewpos_f (void) {
 		(int)cg.refdefViewAngles[YAW]);
 }
 
+static void CG_BuildMenuDown_f ( void ) {
+	if ( !cg.showBuildMenu ) 
+	{
+		cg.showBuildMenu = qtrue;
+	}
+}
+
+static void CG_BuildMenuUp_f ( void ) {
+	if ( cg.showBuildMenu ) 
+	{
+		cg.showBuildMenu = qfalse;
+		//cg.scoreFadeTime = cg.time;
+	}
+}
 
 static void CG_ScoresDown_f( void ) {
 
@@ -472,6 +486,8 @@ static consoleCommand_t	commands[] = {
 	{ "vtell_target", CG_VoiceTellTarget_f },
 	{ "vtell_attacker", CG_VoiceTellAttacker_f },
 	{ "tcmd", CG_TargetCommand_f },
+	{ "+buildmenu", CG_BuildMenuDown_f },
+	{ "-buildmenu", CG_BuildMenuUp_f },
 #ifdef MISSIONPACK
 	{ "loadhud", CG_LoadHud_f },
 	{ "nextTeamMember", CG_NextTeamMember_f },
