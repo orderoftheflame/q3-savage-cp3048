@@ -1641,7 +1641,7 @@ void Cmd_BuildStructure_f (gentity_t *ent , int structure, int cost)
 	{
 		G_Printf( "Sorry you are low on Gold\n");
 	}
-}
+`
 
 /*
 =================
@@ -1770,7 +1770,7 @@ void ClientCommand( int clientNum ) {
 		}
 		else
 		{
-			ent->money += 100;
+			ent->money += 1000;
 			ent->client->ps.persistant[PERS_MONEY] += 1000;
 		}
 	}
