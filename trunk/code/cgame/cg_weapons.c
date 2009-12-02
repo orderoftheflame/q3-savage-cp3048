@@ -813,12 +813,12 @@ void CG_RegisterWeapon( int weaponNum ) {
 		break;
 
 	case WP_RAILGUN:
-		weaponInfo->readySound = trap_S_RegisterSound( "sound/weapons/railgun/rg_hum.wav", qfalse );
+		//weaponInfo->readySound = trap_S_RegisterSound( "sound/weapons/railgun/rg_hum.wav", qfalse );
 		MAKERGB( weaponInfo->flashDlightColor, 1, 0.5f, 0 );
 		weaponInfo->flashSound[0] = trap_S_RegisterSound( "sound/weapons/railgun/railgf1a.wav", qfalse );
-		cgs.media.railExplosionShader = trap_R_RegisterShader( "railExplosion" );
-		cgs.media.railRingsShader = trap_R_RegisterShader( "railDisc" );
-		cgs.media.railCoreShader = trap_R_RegisterShader( "railCore" );
+		cgs.media.railExplosionShader = trap_R_RegisterShader( "bulletExplosion" );
+		//cgs.media.railRingsShader = trap_R_RegisterShader( "railDisc" );
+		cgs.media.railCoreShader = trap_R_RegisterShader( "bulletExplosion" );
 		break;
 
 	case WP_BFG:
@@ -1979,15 +1979,15 @@ void CG_MissileHitWall( int weapon, int clientNum, vec3_t origin, vec3_t dir, im
 	// impact mark
 	//
 	alphaFade = (qboolean)(mark == cgs.media.energyMarkShader);	// plasma fades alpha, all others fade color // ***GREGS_VC9_PORT_MOD*** -- added typecast(s)
-	if ( weapon == WP_RAILGUN ) {
-		float	*color;
+	//if ( weapon == WP_RAILGUN ) {
+	//	float	*color;
 
 		// colorize with client color
-		color = cgs.clientinfo[clientNum].color2;
-		CG_ImpactMark( mark, origin, dir, random()*360, color[0],color[1], color[2],1, alphaFade, radius, qfalse );
-	} else {
+	//	color = cgs.clientinfo[clientNum].color2;
+	//	CG_ImpactMark( mark, origin, dir, random()*360, color[0],color[1], color[2],1, alphaFade, radius, qfalse );
+//	} else {
 		CG_ImpactMark( mark, origin, dir, random()*360, 1,1,1,1, alphaFade, radius, qfalse );
-	}
+//	}
 }
 
 
