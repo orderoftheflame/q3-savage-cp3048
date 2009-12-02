@@ -184,10 +184,10 @@ void InGame_MenuInit( void ) {
 	s_ingame.frame.generic_mc.type			= MTYPE_BITMAP;
 	s_ingame.frame.generic_mc.flags		= QMF_INACTIVE;
 	s_ingame.frame.generic_mc.name			= INGAME_FRAME;
-	s_ingame.frame.generic_mc.x			= 320-233;//142;
-	s_ingame.frame.generic_mc.y			= 240-166;//118;
-	s_ingame.frame.width				= 466;//359;
-	s_ingame.frame.height				= 332;//256;
+	s_ingame.frame.generic_mc.x			= 0;//320-233;//142;
+	s_ingame.frame.generic_mc.y			= 0;//240-166;//118;
+	s_ingame.frame.width				= 640;//466;//359;
+	s_ingame.frame.height				= 480;//332;//256;
 
 	//y = 96;
 	y = 88;

@@ -373,11 +373,11 @@ int Pickup_Structure( gentity_t *ent, gentity_t *other ) {
 		{
 			max = other->client->ps.stats[STAT_MAX_HEALTH]+25;
 			
-			other->health += ent->item->quantity;
+		//	other->health += ent->item->quantity;
 
-			if (other->health > max ) 
+			if (other->health < max ) 
 			{
-				other->health = max;
+				other->health += ent->item->quantity;
 			}
 			other->client->ps.stats[STAT_HEALTH] = other->health;
 			break;
