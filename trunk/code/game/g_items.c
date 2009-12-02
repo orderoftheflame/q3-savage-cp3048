@@ -434,7 +434,7 @@ int Pickup_Structure( gentity_t *ent, gentity_t *other ) {
 				item = BG_FindItemForWeapon( (weapon_t)5 );
 				break;
 			}
-			G_Printf( "Have a %s\n",item->classname);
+		//	G_Printf( "Have a %s\n",item->classname);
 			Drop_Item( ent, item , 180 );
 			break;
 		}
@@ -474,7 +474,7 @@ int Pickup_Structure( gentity_t *ent, gentity_t *other ) {
 				item = BG_FindItemForPowerup( (powerup_t) 5 );
 				break;
 			}
-			G_Printf( "Have a %d- %s\n",random, item->classname);
+			//G_Printf( "Have a %d- %s\n",random, item->classname);
 			Drop_Item( ent, item , 180 );
 			break;
 		}
@@ -746,7 +746,27 @@ gentity_t *LaunchItem( gitem_t *item, vec3_t origin, vec3_t velocity ) {
 		Team_CheckDroppedItem( dropped );
 	} else { // auto-remove after 30 seconds
 		dropped->think = G_FreeEntity;
-		dropped->nextthink = level.time + 30000;
+		if ( item->giType == IT_STRUCTURE )
+		{
+			switch( item->giTag ) {
+			case ST_HEALTH_DES:
+					dropped->nextthink = level.time + 60000;
+				break;
+			case ST_MONEY_DES:
+					dropped->nextthink = level.time + 60000;
+				break;
+			case ST_AMMO_DES:
+					dropped->nextthink = level.time + 30000;
+				break;
+			case ST_POWER_DES:
+					dropped->nextthink = level.time + 30000;
+				break;
+			}
+		}	
+		else
+		{
+			dropped->nextthink = level.time + 30000;
+		}	
 	}
 
 	dropped->flags = FL_DROPPED_ITEM;
