@@ -259,7 +259,7 @@ static cvarTable_t cvarTable[] = { // bk001129
 	{ &cg_tracerChance, "cg_tracerchance", "0.4", 0 },
 	{ &cg_tracerWidth, "cg_tracerwidth", "1", 0 },
 	{ &cg_tracerLength, "cg_tracerlength", "100", 0 },
-	{ &cg_thirdPersonRange, "cg_thirdPersonRange", "30", 0 },
+	{ &cg_thirdPersonRange, "cg_thirdPersonRange", "50", 0 },
 	{ &cg_thirdPersonAngle, "cg_thirdPersonAngle", "-10", 0 },
 	{ &cg_thirdPerson, "cg_thirdPerson", "1", 0 },
 	{ &cg_teamChatTime, "cg_teamChatTime", "3000", CVAR_ARCHIVE  },
