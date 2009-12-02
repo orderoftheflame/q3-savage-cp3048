@@ -44,14 +44,14 @@ MAIN MENU
 #include "ui_local.h"
 
 
-#define ID_SINGLEPLAYER			10
+//#define ID_SINGLEPLAYER			10
 #define ID_MULTIPLAYER			11
-#define ID_UNIMOD				12	//TEST MENU FOR OUR MOD
+//#define ID_UNIMOD				12	//TEST MENU FOR OUR MOD
 #define ID_SETUP				13
-#define ID_DEMOS				14
-#define ID_CINEMATICS			15
-#define ID_TEAMARENA			16
-#define ID_MODS					17
+//#define ID_DEMOS				14
+//#define ID_CINEMATICS			15
+//#define ID_TEAMARENA			16
+//#define ID_MODS					17
 #define ID_EXIT					18
 
 #define MAIN_BANNER_MODEL				"models/mapobjects/banner/banner5.md3"
@@ -61,14 +61,14 @@ MAIN MENU
 typedef struct {
 	menuframework_s	menu;
 
-	menutext_s		singleplayer;
+	//menutext_s		singleplayer;
 	menutext_s		multiplayer;
-	menutext_s		uniMod;
+	//menutext_s		uniMod;
 	menutext_s		setup;
-	menutext_s		demos;
-	menutext_s		cinematics;
-	menutext_s		teamArena;
-	menutext_s		mods;
+	//menutext_s		demos;
+	//menutext_s		cinematics;
+	//menutext_s		teamArena;
+	//menutext_s		mods;
 	menutext_s		exit;
 
 	qhandle_t		bannerModel;
@@ -110,22 +110,22 @@ void Main_MenuEvent (void* ptr, int event) {
 	}
 
 	switch( ((menucommon_s*)ptr)->id ) {
-	case ID_SINGLEPLAYER:
+	/*case ID_SINGLEPLAYER:
 		UI_SPLevelMenu();
 		break;
-
+*/
 	case ID_MULTIPLAYER:
 		UI_ArenaServersMenu();
 		break;
-
+/*
 	case ID_UNIMOD:
 	//	UI_UniModMenu(); //ui_unimod.c
 		break;
-
+*/
 	case ID_SETUP:
 		UI_SetupMenu();
 		break;
-
+/*
 	case ID_DEMOS:
 		UI_DemosMenu();
 		break;
@@ -142,7 +142,7 @@ void Main_MenuEvent (void* ptr, int event) {
 		trap_Cvar_Set( "fs_game", "missionpack");
 		trap_Cmd_ExecuteText( EXEC_APPEND, "vid_restart;" );
 		break;
-
+*/
 	case ID_EXIT:
 		UI_ConfirmMenu( "EXIT GAME?", NULL, MainMenu_ExitAction );
 		break;
@@ -156,7 +156,7 @@ MainMenu_Cache
 ===============
 */
 void MainMenu_Cache( void ) {
-	s_main.bannerModel = trap_R_RegisterModel( MAIN_BANNER_MODEL );
+	//s_main.bannerModel = trap_R_RegisterModel( MAIN_BANNER_MODEL );
 }
 
 sfxHandle_t ErrorMessage_Key(int key)
@@ -214,18 +214,18 @@ static void Main_MenuDraw( void ) {
 
 	// add the model
 
-	memset( &ent, 0, sizeof(ent) );
+	//memset( &ent, 0, sizeof(ent) );
 
 	adjust = 5.0 * sin( (float)uis.realtime / 5000 );
 	VectorSet( angles, 0, 180 + adjust, 0 );
-	AnglesToAxis( angles, ent.axis );
-	ent.hModel = s_main.bannerModel;
-	VectorCopy( origin, ent.origin );
-	VectorCopy( origin, ent.lightingOrigin );
-	ent.renderfx = RF_LIGHTING_ORIGIN | RF_NOSHADOW;
-	VectorCopy( ent.origin, ent.oldorigin );
+	//AnglesToAxis( angles, ent.axis );
+	//ent.hModel = s_main.bannerModel;
+	//VectorCopy( origin, ent.origin );
+	//VectorCopy( origin, ent.lightingOrigin );
+	//ent.renderfx = RF_LIGHTING_ORIGIN | RF_NOSHADOW;
+	//VectorCopy( ent.origin, ent.oldorigin );
 
-	trap_R_AddRefEntityToScene( &ent );
+	//trap_R_AddRefEntityToScene( &ent );
 
 	trap_R_RenderScene( &refdef );
 	
@@ -314,7 +314,7 @@ void UI_MainMenu( void ) {
 		s_errorMessage.menu.key = ErrorMessage_Key;
 		s_errorMessage.menu.fullscreen = qtrue;
 		s_errorMessage.menu.wrapAround = qtrue;
-		s_errorMessage.menu.showlogo = qtrue;		
+		s_errorMessage.menu.showlogo = qfalse;		
 
 		trap_Key_SetCatcher( KEYCATCH_UI );
 		uis.menusp = 0;
@@ -326,10 +326,10 @@ void UI_MainMenu( void ) {
 	s_main.menu.draw = Main_MenuDraw;
 	s_main.menu.fullscreen = qtrue;
 	s_main.menu.wrapAround = qtrue;
-	s_main.menu.showlogo = qtrue;
+	s_main.menu.showlogo = qfalse;
 
 	y = 134;
-	s_main.singleplayer.generic_mc.type		= MTYPE_PTEXT;
+/*	s_main.singleplayer.generic_mc.type		= MTYPE_PTEXT;
 	s_main.singleplayer.generic_mc.flags		= QMF_CENTER_JUSTIFY|QMF_PULSEIFFOCUS;
 	s_main.singleplayer.generic_mc.x			= 320;
 	s_main.singleplayer.generic_mc.y			= y;
@@ -338,8 +338,8 @@ void UI_MainMenu( void ) {
 	s_main.singleplayer.string				= "SINGLE PLAYER";
 	s_main.singleplayer.color				= color_red;
 	s_main.singleplayer.style				= style;
-
-	y += MAIN_MENU_VERTICAL_SPACING;
+*/
+	//y += MAIN_MENU_VERTICAL_SPACING;
 	s_main.multiplayer.generic_mc.type			= MTYPE_PTEXT;
 	s_main.multiplayer.generic_mc.flags		= QMF_CENTER_JUSTIFY|QMF_PULSEIFFOCUS;
 	s_main.multiplayer.generic_mc.x			= 320;
@@ -349,7 +349,7 @@ void UI_MainMenu( void ) {
 	s_main.multiplayer.string				= "MULTIPLAYER";
 	s_main.multiplayer.color				= color_red;
 	s_main.multiplayer.style				= style;
-
+/*
 	// setup the new menu
 	y += MAIN_MENU_VERTICAL_SPACING;
 	s_main.uniMod.generic_mc.type			= MTYPE_PTEXT;
@@ -361,7 +361,7 @@ void UI_MainMenu( void ) {
 	s_main.uniMod.string					= "UNI MOD";
 	s_main.uniMod.color						= color_red;
 	s_main.uniMod.style						= style;
-
+*/
 	y += MAIN_MENU_VERTICAL_SPACING;
 	s_main.setup.generic_mc.type				= MTYPE_PTEXT;
 	s_main.setup.generic_mc.flags				= QMF_CENTER_JUSTIFY|QMF_PULSEIFFOCUS;
@@ -372,7 +372,7 @@ void UI_MainMenu( void ) {
 	s_main.setup.string						= "SETUP";
 	s_main.setup.color						= color_red;
 	s_main.setup.style						= style;
-
+/*
 	y += MAIN_MENU_VERTICAL_SPACING;
 	s_main.demos.generic_mc.type				= MTYPE_PTEXT;
 	s_main.demos.generic_mc.flags				= QMF_CENTER_JUSTIFY|QMF_PULSEIFFOCUS;
@@ -419,7 +419,7 @@ void UI_MainMenu( void ) {
 	s_main.mods.string					= "MODS";
 	s_main.mods.color					= color_red;
 	s_main.mods.style					= style;
-
+*/
 	y += MAIN_MENU_VERTICAL_SPACING;
 	s_main.exit.generic_mc.type				= MTYPE_PTEXT;
 	s_main.exit.generic_mc.flags				= QMF_CENTER_JUSTIFY|QMF_PULSEIFFOCUS;
@@ -431,16 +431,16 @@ void UI_MainMenu( void ) {
 	s_main.exit.color						= color_red;
 	s_main.exit.style						= style;
 
-	Menu_AddItem( &s_main.menu,	&s_main.singleplayer );
+	//Menu_AddItem( &s_main.menu,	&s_main.singleplayer );
 	Menu_AddItem( &s_main.menu,	&s_main.multiplayer );
-	Menu_AddItem( &s_main.menu, &s_main.uniMod );
+	//Menu_AddItem( &s_main.menu, &s_main.uniMod );
 	Menu_AddItem( &s_main.menu,	&s_main.setup );
-	Menu_AddItem( &s_main.menu,	&s_main.demos );
-	Menu_AddItem( &s_main.menu,	&s_main.cinematics );
-	if (teamArena) {
-		Menu_AddItem( &s_main.menu,	&s_main.teamArena );
-	}
-	Menu_AddItem( &s_main.menu,	&s_main.mods );
+	//Menu_AddItem( &s_main.menu,	&s_main.demos );
+//	Menu_AddItem( &s_main.menu,	&s_main.cinematics );
+//	if (teamArena) {
+//		Menu_AddItem( &s_main.menu,	&s_main.teamArena );
+//	}
+//	Menu_AddItem( &s_main.menu,	&s_main.mods );
 	Menu_AddItem( &s_main.menu,	&s_main.exit );             
 
 	trap_Key_SetCatcher( KEYCATCH_UI );

@@ -245,7 +245,7 @@ Spectators will only interact with teleporters.
 ============
 */
 void	G_TouchTriggers( gentity_t *ent ) {
-	int			i, num;
+	int			i, num, timeLimit;;
 	int			touch[MAX_GENTITIES];
 	gentity_t	*hit;
 	trace_t		trace;
@@ -290,11 +290,25 @@ void	G_TouchTriggers( gentity_t *ent ) {
 				continue;
 			}
 		}
-
+		timeLimit = 250;
 		// use seperate code for determining if an item is picked up
 		// so you don't have to actually contact its bounding box
 		if ( hit->s.eType == ET_ITEM ) {
-			if ( (hit->lastTouchTime + 250 < level.time ) )
+			switch( hit->item->giTag ) {
+				case ST_HEALTH_DES:
+						timeLimit = 250;
+					break;
+				case ST_MONEY_DES:
+						timeLimit = 250;
+					break;
+				case ST_AMMO_DES:
+						timeLimit = 3000;
+					break;
+				case ST_POWER_DES:
+						timeLimit = 7000;
+					break;
+			}
+			if ( (hit->lastTouchTime + timeLimit < level.time ) )
 			{
 				if ( !BG_PlayerTouchesItem( &ent->client->ps, &hit->s, level.time ) ) {
 					continue;

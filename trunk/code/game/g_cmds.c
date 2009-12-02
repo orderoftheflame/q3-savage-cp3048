@@ -1641,7 +1641,7 @@ void Cmd_BuildStructure_f (gentity_t *ent , int structure, int cost)
 	{
 		G_Printf( "Sorry you are low on Gold\n");
 	}
-`
+}
 
 /*
 =================

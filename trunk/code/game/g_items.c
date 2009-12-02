@@ -368,47 +368,116 @@ int Pickup_Money( gentity_t *ent, gentity_t *other ) {
 int Pickup_Structure( gentity_t *ent, gentity_t *other ) {
 	int max;
 //	G_Printf( "You're Touching a %s\n",ent->item->classname);
-
-	if ( ent->item->giTag == ST_HEALTH_DES ) {
-		max = other->client->ps.stats[STAT_MAX_HEALTH]+25;
-		
-		other->health += ent->item->quantity;
-
-		if (other->health > max ) 
+	switch( ent->item->giTag ) {
+	case ST_HEALTH_DES:
 		{
-			other->health = max;
+			max = other->client->ps.stats[STAT_MAX_HEALTH]+25;
+			
+			other->health += ent->item->quantity;
+
+			if (other->health > max ) 
+			{
+				other->health = max;
+			}
+			other->client->ps.stats[STAT_HEALTH] = other->health;
+			break;
 		}
-		other->client->ps.stats[STAT_HEALTH] = other->health;
-
-	}
-
-	if( ent->item->giTag == ST_MONEY_DES ) {
-		if (other->money >= 32767)
+	case ST_MONEY_DES:
 		{
-			other->money = 32767;
-			other->client->ps.persistant[PERS_MONEY] = 32767;
+			if (other->money >= 32767)
+			{
+				other->money = 32767;
+				other->client->ps.persistant[PERS_MONEY] = 32767;
+			}
+			else
+			{
+				other->money += ent->item->quantity;
+
+				//for the HUD I have no idea why they dont pass a pointer to the entity to the HUD but whatever
+				other->client->ps.persistant[PERS_MONEY] += ent->item->quantity;
+			}
+			break;
 		}
-		else
+	case ST_AMMO_DES:
 		{
-			other->money += ent->item->quantity;
-
-			//for the HUD I have no idea why they dont pass a pointer to the entity to the HUD but whatever
-			other->client->ps.persistant[PERS_MONEY] += ent->item->quantity;
-		}	
-		
-	}
-	if( ent->item->giTag == ST_AMMO_DES ) {
-		gitem_t *item;
-
-		item = BG_FindItemForWeapon( (weapon_t)7 );
-		Drop_Item( ent, item , 180 );
-	}
-
-	if( ent->item->giTag == ST_POWER_DES ) {
-		gitem_t *item;
-
-		item = BG_FindItemForWeapon( (weapon_t)7 );
-		Drop_Item( ent, item , 180 );
+			gitem_t *item;
+			int random = (random() * 10)+1;
+			switch( random ) {
+			case 1:
+				item = BG_FindItemForWeapon( (weapon_t)2 );
+				break;
+			case 2:
+				item = BG_FindItemForWeapon( (weapon_t)2 );
+				break;
+			case 3:
+				item = BG_FindItemForWeapon( (weapon_t)2 );
+				break;
+			case 4:
+				item = BG_FindItemForWeapon( (weapon_t)3 );
+				break;
+			case 5:
+				item = BG_FindItemForWeapon( (weapon_t)3 );
+				break;
+			case 6:
+				item = BG_FindItemForWeapon( (weapon_t)3 );
+				break;
+			case 7:
+				item = BG_FindItemForWeapon( (weapon_t)5 );
+				break;
+			case 8:
+				item = BG_FindItemForWeapon( (weapon_t)5 );
+				break;
+			case 9:
+				item = BG_FindItemForWeapon( (weapon_t)7 );
+				break;
+			case 10:
+				item = BG_FindItemForWeapon( (weapon_t)5 );
+				break;
+			}
+			G_Printf( "Have a %s\n",item->classname);
+			Drop_Item( ent, item , 180 );
+			break;
+		}
+	case ST_POWER_DES:
+		{
+			gitem_t *item;
+			int random = (random() * 10)+1;
+			switch( random ) {
+			case 1:
+				item = BG_FindItemForPowerup( (powerup_t)1 );//quad
+				break;
+			case 2:
+				item = BG_FindItemForPowerup( (powerup_t)2 );//envir
+				break;
+			case 3:
+				item = BG_FindItemForPowerup( (powerup_t)3 );//boost
+				break;
+			case 4:
+				item = BG_FindItemForPowerup( (powerup_t)4 );//invis
+				break;
+			case 5:
+				item = BG_FindItemForPowerup( (powerup_t)5 );//regen
+				break;
+			case 6:
+				item = BG_FindItemForPowerup( (powerup_t)3 );
+				break;
+			case 7:
+				item = BG_FindItemForPowerup( (powerup_t)3 );
+				break;
+			case 8:
+				item = BG_FindItemForPowerup( (powerup_t)5 );
+				break;
+			case 9:
+				item = BG_FindItemForPowerup( (powerup_t)4 );
+				break;
+			case 10:
+				item = BG_FindItemForPowerup( (powerup_t) 5 );
+				break;
+			}
+			G_Printf( "Have a %d- %s\n",random, item->classname);
+			Drop_Item( ent, item , 180 );
+			break;
+		}
 	}
 	
 	return RESPAWN_STRUCTURE;
