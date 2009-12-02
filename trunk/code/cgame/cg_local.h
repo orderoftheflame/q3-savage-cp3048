@@ -703,6 +703,7 @@ typedef struct {
 	qhandle_t	armorIcon;
 	qhandle_t	baseUiOverlay;
 	qhandle_t	teamStatusBar;
+	qhandle_t	teamStatusBar2;
 	qhandle_t	buildMenuOverlay;
 	qhandle_t	weaponMenuOverlay;
 	qhandle_t	deferShader;
