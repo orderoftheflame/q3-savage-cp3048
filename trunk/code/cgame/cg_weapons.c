@@ -460,6 +460,7 @@ static void CG_NailTrail( centity_t *ent, const weaponInfo_t *wi ) {
 CG_NailTrail
 ==========================
 */
+/*
 static void CG_PlasmaTrail( centity_t *cent, const weaponInfo_t *wi ) {
 	localEntity_t	*le;
 	refEntity_t		*re;
@@ -549,7 +550,7 @@ static void CG_PlasmaTrail( centity_t *cent, const weaponInfo_t *wi ) {
 	le->angles.trDelta[1] = 0.5;
 	le->angles.trDelta[2] = 0;
 
-}
+}*/
 /*
 ==========================
 CG_GrappleTrail
@@ -793,12 +794,22 @@ void CG_RegisterWeapon( int weaponNum ) {
 
 	case WP_PLASMAGUN:
 //		weaponInfo->missileModel = cgs.media.invulnerabilityPowerupModel;
-		weaponInfo->missileTrailFunc = CG_PlasmaTrail;
+		/*weaponInfo->missileTrailFunc = CG_PlasmaTrail;
 		weaponInfo->missileSound = trap_S_RegisterSound( "sound/weapons/plasma/lasfly.wav", qfalse );
 		MAKERGB( weaponInfo->flashDlightColor, 0.6f, 0.6f, 1.0f );
 		weaponInfo->flashSound[0] = trap_S_RegisterSound( "sound/weapons/plasma/hyprbf1a.wav", qfalse );
 		cgs.media.plasmaExplosionShader = trap_R_RegisterShader( "plasmaExplosion" );
-		cgs.media.railRingsShader = trap_R_RegisterShader( "railDisc" );
+		cgs.media.railRingsShader = trap_R_RegisterShader( "railDisc" );*/
+		//weaponInfo->missileModel = cgs.media.invulnerabilityPowerupModel;
+		//weaponInfo->missileTrailFunc = CG_Bullet;
+		MAKERGB( weaponInfo->flashDlightColor, 1, 1, 0 );
+		weaponInfo->flashSound[0] = trap_S_RegisterSound( "sound/weapons/machinegun/machgf1b.wav", qfalse );
+		weaponInfo->flashSound[1] = trap_S_RegisterSound( "sound/weapons/machinegun/machgf2b.wav", qfalse );
+		weaponInfo->flashSound[2] = trap_S_RegisterSound( "sound/weapons/machinegun/machgf3b.wav", qfalse );
+		weaponInfo->flashSound[3] = trap_S_RegisterSound( "sound/weapons/machinegun/machgf4b.wav", qfalse );
+		weaponInfo->missileModel = trap_R_RegisterModel( "models/weaphits/bullet.md3" );
+		weaponInfo->ejectBrassFunc = CG_MachineGunEjectBrass;
+		cgs.media.bulletExplosionShader = trap_R_RegisterShader( "bulletExplosion" );
 		break;
 
 	case WP_RAILGUN:
