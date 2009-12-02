@@ -155,7 +155,8 @@ void SnapVectorTowards( vec3_t v, vec3_t to ) {
 #define CHAINGUN_SPREAD		600
 #endif
 #define MACHINEGUN_SPREAD	200
-#define	MACHINEGUN_DAMAGE	7
+#define	MACHINEGUN_DAMAGE	15
+//#define	MACHINEGUN_DAMAGE	7
 #define	MACHINEGUN_TEAM_DAMAGE	5		// wimpier MG in teamplay
 
 void Bullet_Fire (gentity_t *ent, float spread, int damage ) {
@@ -170,8 +171,8 @@ void Bullet_Fire (gentity_t *ent, float spread, int damage ) {
 	gentity_t	*traceEnt;
 	int			i, passent;
 
-	damage *= s_quadFactor;
-
+	//damage *= s_quadFactor;
+	damage = MACHINEGUN_DAMAGE;
 	r = random() * M_PI * 2.0f;
 	u = sin(r) * crandom() * spread * 16;
 	r = cos(r) * crandom() * spread * 16;
@@ -262,7 +263,8 @@ SHOTGUN
 
 // DEFAULT_SHOTGUN_SPREAD and DEFAULT_SHOTGUN_COUNT	are in bg_public.h, because
 // client predicts same spreads
-#define	DEFAULT_SHOTGUN_DAMAGE	10
+//#define	DEFAULT_SHOTGUN_DAMAGE	25
+#define	DEFAULT_SHOTGUN_DAMAGE	2
 
 qboolean ShotgunPellet( vec3_t start, vec3_t end, gentity_t *ent ) {
 	trace_t		tr;
@@ -286,7 +288,8 @@ qboolean ShotgunPellet( vec3_t start, vec3_t end, gentity_t *ent ) {
 		}
 
 		if ( traceEnt->takedamage) {
-			damage = DEFAULT_SHOTGUN_DAMAGE * s_quadFactor;
+			//damage = DEFAULT_SHOTGUN_DAMAGE * s_quadFactor;
+			damage = DEFAULT_SHOTGUN_DAMAGE;
 #ifdef MISSIONPACK
 			if ( traceEnt->client && traceEnt->client->invulnerabilityTime > level.time ) {
 				if (G_InvulnerabilityEffect( traceEnt, forward, tr.endpos, impactpoint, bouncedir )) {
@@ -395,14 +398,17 @@ ROCKET
 
 ======================================================================
 */
+#define	ROCKET_DAMAGE 45
+#define	ROCKETSPLASH_DAMAGE 20
 
 void Weapon_RocketLauncher_Fire (gentity_t *ent) {
 	gentity_t	*m;
 
 	m = fire_rocket (ent, muzzle, forward);
-	m->damage *= s_quadFactor;
-	m->splashDamage *= s_quadFactor;
-
+	//m->damage *= s_quadFactor;
+	//m->splashDamage *= s_qudFactor;
+    m->damage = ROCKET_DAMAGE;
+	m->splashDamage = ROCKETSPLASH_DAMAGE;
 //	VectorAdd( m->s.pos.trDelta, ent->client->ps.velocity, m->s.pos.trDelta );	// "real" physics
 }
 
@@ -414,14 +420,21 @@ PLASMA GUN
 
 ======================================================================
 */
+#define	PISTOL_DAMAGE 15
+//#define	ROCKETSPLASH_DAMAGE 20
 
 void Weapon_Plasmagun_Fire (gentity_t *ent) {
 	gentity_t	*m;
 
 	m = fire_plasma (ent, muzzle, forward);
-	m->damage *= s_quadFactor;
-	m->splashDamage *= s_quadFactor;
-
+	//m = Bullet_Fire(ent, muzzle, forward);
+	//m = fire_plasma (ent, muzzle, backward);
+	//m = fire_bfg (ent, muzzle, forward);
+	
+	//m->damage *= s_quadFactor;
+	//m->splashDamage *= s_quadFactor;
+	m->damage = PISTOL_DAMAGE;
+	//m->splashDamage = 0;
 //	VectorAdd( m->s.pos.trDelta, ent->client->ps.velocity, m->s.pos.trDelta );	// "real" physics
 }
 
