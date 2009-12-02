@@ -1861,18 +1861,41 @@ void CG_MissileHitWall( int weapon, int clientNum, vec3_t origin, vec3_t dir, im
 		}
 		break;
 	case WP_RAILGUN:
-		mod = cgs.media.ringFlashModel;
-		shader = cgs.media.railExplosionShader;
-		sfx = cgs.media.sfx_plasmaexp;
-		mark = cgs.media.energyMarkShader;
-		radius = 24;
+		mod = cgs.media.bulletFlashModel;
+		shader = cgs.media.bulletExplosionShader;
+		mark = cgs.media.bulletMarkShader;
+
+		r = rand() & 3;
+		if ( r == 0 ) {
+			sfx = cgs.media.sfx_ric1;
+		} else if ( r == 1 ) {
+			sfx = cgs.media.sfx_ric2;
+		} else {
+			sfx = cgs.media.sfx_ric3;
+		}
+
+		radius = 8;
 		break;
 	case WP_PLASMAGUN:
-		mod = cgs.media.ringFlashModel;
-		shader = cgs.media.plasmaExplosionShader;
-		sfx = cgs.media.sfx_plasmaexp;
-		mark = cgs.media.energyMarkShader;
-		radius = 16;
+	//	mod = cgs.media.ringFlashModel;
+	//	shader = cgs.media.plasmaExplosionShader;
+	//	sfx = cgs.media.sfx_plasmaexp;
+	//	mark = cgs.media.energyMarkShader;
+	//	radius = 16;
+		mod = cgs.media.bulletFlashModel;
+		shader = cgs.media.bulletExplosionShader;
+		mark = cgs.media.bulletMarkShader;
+
+		r = rand() & 3;
+		if ( r == 0 ) {
+			sfx = cgs.media.sfx_ric1;
+		} else if ( r == 1 ) {
+			sfx = cgs.media.sfx_ric2;
+		} else {
+			sfx = cgs.media.sfx_ric3;
+		}
+
+		radius = 8;
 		break;
 	case WP_BFG:
 		mod = cgs.media.dishFlashModel;

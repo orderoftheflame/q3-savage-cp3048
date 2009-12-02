@@ -427,7 +427,7 @@ void Weapon_Plasmagun_Fire (gentity_t *ent) {
 	gentity_t	*m;
 
 	m = fire_plasma (ent, muzzle, forward);
-	//m = Bullet_Fire(ent, muzzle, forward);
+	//m = Bullet_Fire(ent, (float)1.0, forward);
 	//m = fire_plasma (ent, muzzle, backward);
 	//m = fire_bfg (ent, muzzle, forward);
 	
